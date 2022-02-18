@@ -1,0 +1,404 @@
+fNOTES
+Array Drawbacks
+-say we have a sorted Array
+Linked List
+-each element occupies its own node.
+-we can as=dd a new node anywhere in the list by reconnecting pointers
+-traversing a linked list is done by "hopping" around in the memory space by following pointers
+-separate pointer that is typically called the head
+-How do we search a linked list?
+
+LINKED LIST RECAP
+-a data structure that allows individual elements to be added and deleted as needed
+-typically, allocated dynamically
+-memory is allocated and deallocated for each individual element as it is added or removed
+-each element
+  - called a node
+  -node contains a key value and a pointer to next node
+-access the list via the head pointer
+-the end of the list is denoted by a next = nullptr
+
+Abstract Data Type(ADT)
+-A collection of member data and the allowed operations on that Data
+-Abstract, because the user only has info about the inputs the outputs and a explanation
+of actions
+-can think of it as a psuedocode for a class definition
+-not language specific
+
+Singly Linked List Generic ADT:
+private:
+  head - ptr to the first element in the LIST. Null means empty LIST
+
+public:
+  initialize() - set header to null
+  nodePtr = search(value) - find a value and return ptr to its node
+  insertNode(previousPtr, newValue) - given a ptr to a node, insert a new node right after it
+  displayList()-starting at head, traverse the list and display all keys
+  deleteNode(nodePtr) - given a ptr to a node, remove node from LIST
+  deleteList()- deallocate the entire
+
+Rule to keep in mind:
+-Every method in the ADT should be designed such that once it performs its task, the integrity of
+the data structure is preserved
+-example violation: delete a node and forget to reconnect the pointers properly
+
+
+Implementation
+
+  Constructor definition - gets called when the object is instantiated
+
+1.Constructor- test: compile
+2.search - test: compile; call searh() in our driver with some test string.
+
+
+STRUCTS
+
+struct Node{ //Singly linked list
+  string key;
+  int data;
+  Node* next;
+}
+
+int main(){
+  //statically allocate node: not typical for linked lists
+  Node N; //lets not do this
+
+  //lets dynamically allocate a node
+  Node* ptr = new Node;
+
+  //populate the node
+  ptr.key = "fancy"; //NOPE; ptr does not have members
+  //its just a pointer, how do we dereference a pointers
+  (*ptr).key = "fancy";
+  //equivalent result(different syntax)
+  ptr->key = "fancy";
+
+  //lets create another node
+  Node* ptr2 = new Node;
+   // link the 2 nodes
+   ptr-> next = ptr2;
+
+   //how to set second node(pointed top by ptr2)
+   //to point to null?
+   ptr2->next =  nullptr;
+
+   //thats fine. but what if i wiped out ptr2
+   ptr2 = nullptr;
+   ptr->next->next = nullptr;
+
+}
+
+9/25
+Stack RECAP
+-Last in, first out data structure
+-a "Limited access" data structure
+  -can only add from the top(push)
+  -can only remove from the top(pop)
+  -depends on implementation, can have a hard limit on max size
+-Usage Examples
+  -during proghram execution,
+  ex. the undo button
+
+Stack ADT
+
+private:
+    top-keeps track of the top element
+    maxSize- limit on  total size of Stack
+    count- current num of elements
+
+public:
+  initialize()-Constructor
+  bool = isFull() check if stack is Full
+  bool = isEmpty()
+  value = peek()-show top item(peak())
+  push(item)-add new item to top
+  pop()-discard item from the top
+  disp()-traverse entire stack
+
+
+
+bool isEmpty()
+if top == nullptr
+  return true
+else
+  return false
+
+Node* Peek()
+if isEmpty()
+  return nullptr
+else
+  return top
+
+void push(type item)
+//allocate new nodes
+
+if isEmpty()
+  make the new node top
+  set new node->next = nullptr
+else
+  make new node point to old top
+  make new node top
+
+void pop()
+if !isEmpty()
+  temp = top
+  move top to point to top->next
+  deallocate temp
+else
+  "stack underflow" (stack is empty)
+
+void display
+  same as SLL display
+
+
+QUEUE
+-Another limited access data structure
+-now we enqueue
+
+Queue ADT
+private:
+  head-first item in the Q(next thing to be proccessed)
+  tail-last thing in the Q
+  QueueSize-number of elemts currently in the Q
+
+public:
+  initialize()
+  bool = isFull()
+  bool = isEmpty()
+  enque(item)
+  item=dequeu
+
+
+
+
+Circular Array Queue
+-Allow for both tail and head to shift when enqueing and dequeing
+  -head indexes the beginning of q
+  -tail indexes the end of the q
+  - empty q => both head and tail point to arr[0]
+
+
+
+Binary Search Trees 9/30 (UPSIDE DOWN TREE)
+  A BST is a special case of a general Tree
+  -every node can have 0 to 2 children
+  -Root is the top mist node
+  -Nodes w no children are called leaves
+  -from any node
+    -left subtree has smaller key values
+    -right subtree has greater or equal key values
+
+  Searching a BST
+  1. set root to some crawler pointer
+  2. if (crawler.key == search key)
+        done
+  3. if (search.key < crawler.key)
+        visit the left child
+        crawler = crawler.leftchild
+  4. else
+      visit the right child
+      crawler = crawler.rightchild
+  repeat 2-4 until search key is found
+
+  height is number of rows starting with 0
+  height tells us worst case number oof operations needed to find any node in the tree
+
+  *************
+  N = 2^h+1 - 1
+  *************
+  15 = 2^4 - 1
+
+  N + 1 = 2^H+1
+  log2(n+1) = log2(2^h+1)
+  *****************
+  h = log2(N+1) - 1
+  *****************
+
+
+BST RECAP
+-Tree: has a root, branches, sub-trees, and children
+-Binary: each node has two children
+-Search: ordered from left to right (smallest to largest)
+
+PSUEDOCODE FOR BST
+
+if(newkey > currentkey)
+  go right
+else(>=)
+  go left
+
+NODE AND ADT
+struct{
+  type key;
+  node* parent;
+  node* leftchld;
+  node* rightchild;
+};
+
+
+BST ADT
+
+private:
+  node root;
+  node insertHelper(NODE, VALUE)
+  node searchHelper(Node, value)
+  Node deleteHelper(Node, value)
+
+  Node getMinValue(Node)
+  NodegetMinValue(node)
+
+  void destroysubtree(node)
+
+public:
+  init()
+  insert(value)
+  search(value)
+  delete(value)
+  disp()
+  deleteTree()
+
+
+
+
+10/9
+RECURSION
+There is another approach to designing programs: a function can be called,
+and then if certain condtition is met, the function calls another instance of
+itself.
+For a proper recursive algorithm, the algorithm needs to eventually reach a
+base case.(where prog can terminate)
+
+RECURSION IN BST
+void f(Node n){//check if node exists
+  if(n){
+    f(n->left)
+    cout << n->key << endl;
+    f(n->right)
+  }
+}
+
+
+10/16
+BST LL
+
+generateLL(int low, int high);
+-update class to be a hybrid BST-LL class
+-add a private (linked list)  head members-use a modified traversal algorithm
+
+void generateLL(int low, int high){
+  gll(root, low, high);
+}
+
+gll(Node n, int low, int high){
+  if(n->leftchld!= null && crawler->key >low){
+    gll(n->leftchld);
+  }
+  check if low < crawler->key < high
+
+  if(n->rightchild != nullptr && crawler->key < high){
+    gll(n->rightchild);
+  }
+}
+
+
+SELF BALANCING- RED-BLACK TREE
+-Still satisfies  BST properties, except every node now has a "color"
+and we have additional operations that can be performed in the trees.
+
+RB Rules
+1.A node is either red or black(color can change as a tree re-balances)
+2. Root node is black
+3. Every leaf node is  black, empty, and has null pointer children
+4. If a node is red, both its children must be BLACK
+5. For every node in the tree, all paths to a descendant leaf node must pass through
+  the same number of black Nodes
+
+RB operations
+1. recolor a node
+  -red  or BLACK
+2. rotate- change
+
+10/23
+
+STL Vectors
+Standard Template Library
+-very widely used set of Template classes. Includes most of the commomn data structures
+
+Template class
+-a class that works generically on any type
+
+Primitive type ex
+vector<int> v0;
+
+User defined Type
+struct myStruct{
+  int number
+  string words
+}
+vector<myStruct> v1;
+
+
+
+
+GRAPHS
+-unlike a BST, there are no defined relationships b/w verticies
+-cannot say v0>v1 bc of parent child relationship
+
+-all relationships are
+
+vectore <int*> vecPtrs(5)
+int * p0 = new int[3];
+p0[0] = 2
+p0[1] = 7
+p0[2] = 0
+
+vecPtrs[0]  = p0
+
+cout "vecptrs: "  vecPtrs[0]   //memory adress
+
+cout "vecptrs: "  *vecPtrs[0] //dereference to get value 2
+
+cout "vecptrs: "  *(vecPtrs[0] + 1) //increment p0 to get value 7
+
+
+User defined Type
+struct myStruct{
+  int number
+  string words
+}
+vector<myStruct> v1;
+
+
+GRAPH ADT
+undirected- Vx->Vy implies Vy->Vx
+weighted- every edge has a weight
+
+ADT:
+private:
+  verticies
+    //(edges)
+
+public:
+  insertVertex(value)
+  addEdge(startValue, endValue, weight)
+  deleteVertex(value)
+  deleteEdge(startValue, endValue)
+  displayGraph()
+  note no search method
+
+
+
+c++ defintitions
+
+private:
+    vector<vertex*> verticies
+
+struct vertex{
+  string key;
+  vector<edge> adj;
+}
+
+struct edge{
+  vertex * v
+  int weight
+}
